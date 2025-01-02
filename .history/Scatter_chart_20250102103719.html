@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Middle Tennessee Real Estate Market Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, rgba(247, 247, 247, 1), rgba(240, 240, 255, 1));
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            height: 500px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .chart-container:hover {
+            transform: translateY(-5px);
+        }
+        .page-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .legend-description {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-title">Middle Tennessee Real Estate Market Analysis</div>
+    <div class="charts-grid">
+        <div class="chart-container">
+            <canvas id="medianChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="inventoryChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="pricePerFootChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="monthsSupplyChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="newListingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="showingsChart"></canvas>
+        </div>
+    </div>
+    <div class="legend-description">
+        <span style="color: rgba(54, 162, 235, 1); font-weight: bold;">Cities</span> and 
+        <span style="color: rgba(255, 99, 132, 1); font-weight: bold;">Counties</span> grouped by performance quadrants.
+    </div>
+
+    <script>
+        Chart.register(ChartDataLabels);
+
+        const metrics = {
+            median: {
+                title: 'Median Sale Price',
+                jsonFile: 'median_scatter.json',
+                valuePrefix: '$',
+                scales: { x: { min: -10, max: 10 }, y: { min: -15, max: 20 } }
+            },
+            inventory: {
+                title: 'Active Inventory',
+                jsonFile: 'inventory_scatter.json',
+                valuePrefix: '',
+                scales: { x: { min: -15, max: 5 }, y: { min: -10, max: 50 } }
+            },
+            pricePerFoot: {
+                title: 'Price Per Square Foot',
+                jsonFile: 'price_per_foot_scatter.json',
+                valuePrefix: '$',
+                scales: { x: { min: -5, max: 8 }, y: { min: -10, max: 20 } }
+            },
+            monthsSupply: {
+                title: 'Months of Supply',
+                jsonFile: 'months_supply_scatter.json',
+                valuePrefix: '',
+                scales: { x: { min: -25, max: 10 }, y: { min: -20, max: 45 } }
+            },
+            newListings: {
+                title: 'New Listings',
+                jsonFile: 'new_listings_scatter.json',
+                valuePrefix: '',
+                scales: { x: { min: -45, max: -10 }, y: { min: -30, max: 50 } }
+            },
+            showings: {
+                title: 'Showings per Property',
+                jsonFile: 'showings_scatter.json',
+                valuePrefix: '',
+                scales: { x: { min: -35, max: 35 }, y: { min: -50, max: 25 } }
+            }
+        };
+
+        async function loadData(metricKey, chartId) {
+            try {
+                const metric = metrics[metricKey];
+                const response = await fetch(`./json/2024/December/${metric.jsonFile}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                let data = await response.json();
+
+                // Filter out any summary entries
+                data = data.filter(item => !item.label.toLowerCase().includes('summary'));
+                
+                // For inventory metric, keep only active inventory entries
+                if (metricKey === "inventory") {
+                    data = data.filter(item =>
+                        item.label.toLowerCase().includes("active inventory")
+                    );
+                }
+
+                const cities = data.filter(item => !item.label.toLowerCase().includes('county'));
+                const counties = data.filter(item => item.label.toLowerCase().includes('county'));
+
+                createChart(metric, chartId, cities, counties);
+            } catch (error) {
+                console.error(`Error loading ${metricKey} data:`, error);
+            }
+        }
+
+        function extractLocationName(label) {
+            let name = label.split(/[,(]/)[0].trim();
+            name = name.replace(' County', '');
+            name = name.replace('Active Inventory', '').trim();
+            return name;
+        }
+
+        function createChart(metric, chartId, cities, counties) {
+            const ctx = document.getElementById(chartId).getContext('2d');
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Cities',
+                            data: cities.map(city => ({
+                                x: city.x,
+                                y: city.y,
+                                label: city.label,
+                                locationName: extractLocationName(city.label),
+                                medianValue: city.medianValue
+                            })),
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            pointRadius: 8,
+                            pointHoverRadius: 10
+                        },
+                        {
+                            label: 'Counties',
+                            data: counties.map(county => ({
+                                x: county.x,
+                                y: county.y,
+                                label: county.label,
+                                locationName: extractLocationName(county.label),
+                                medianValue: county.medianValue
+                            })),
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            pointRadius: 8,
+                            pointHoverRadius: 10
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        datalabels: {
+                            formatter: (value) => value.locationName,
+                            color: '#333',
+                            font: {
+                                size: 9,
+                                weight: '500'
+                            },
+                            padding: 4,
+                            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                            borderRadius: 3,
+                            align: function(context) {
+                                const value = context.dataset.data[context.dataIndex];
+                                const allPoints = context.dataset.data;
+                                
+                                // Find closest point
+                                let closestDistance = Infinity;
+                                allPoints.forEach(p => {
+                                    if (p === value) return;
+                                    const dx = value.x - p.x;
+                                    const dy = value.y - p.y;
+                                    const distance = Math.sqrt(dx * dx + dy * dy);
+                                    if (distance < closestDistance) {
+                                        closestDistance = distance;
+                                    }
+                                });
+
+                                // Dynamic positioning based on closest neighbor
+                                if (closestDistance < 1) {
+                                    // Very close points - use more varied positioning
+                                    const angle = Math.atan2(value.y, value.x);
+                                    if (angle > -Math.PI/4 && angle < Math.PI/4) return 'right';
+                                    if (angle > Math.PI/4 && angle < 3*Math.PI/4) return 'top';
+                                    if (angle < -Math.PI/4 && angle > -3*Math.PI/4) return 'bottom';
+                                    return 'left';
+                                } else {
+                                    // Standard quadrant-based positioning
+                                    if (value.y > 0) {
+                                        return value.x < 0 ? 'left' : 'right';
+                                    }
+                                    return value.y < -10 ? 'bottom' : 'top';
+                                }
+                            },
+                            offset: function(context) {
+                                const value = context.dataset.data[context.dataIndex];
+                                const allPoints = context.dataset.data;
+                                
+                                // Find closest point distance
+                                let closestDistance = Infinity;
+                                allPoints.forEach(p => {
+                                    if (p === value) return;
+                                    const dx = value.x - p.x;
+                                    const dy = value.y - p.y;
+                                    const distance = Math.sqrt(dx * dx + dy * dy);
+                                    if (distance < closestDistance) {
+                                        closestDistance = distance;
+                                    }
+                                });
+
+                                // Adjust offset based on proximity
+                                if (closestDistance < 1) {
+                                    return 20; // Larger offset for very close points
+                                } else if (closestDistance < 2) {
+                                    return 16; // Medium offset for moderately close points
+                                }
+                                return 12; // Default offset
+                            },
+                            display: function(context) {
+                                const currentData = context.dataset.data[context.dataIndex];
+                                const dataset = context.dataset;
+                                let showLabel = true;
+                                
+                                // Only compare with points in the same quadrant
+                                const neighbors = dataset.data.filter(p => 
+                                    (p.x >= 0) === (currentData.x >= 0) && 
+                                    (p.y >= 0) === (currentData.y >= 0) &&
+                                    p !== currentData
+                                );
+                                
+                                neighbors.forEach(otherPoint => {
+                                    const dx = currentData.x - otherPoint.x;
+                                    const dy = currentData.y - otherPoint.y;
+                                    const distance = Math.sqrt(dx * dx + dy * dy);
+                                    
+                                    if (distance < 0.3) { // Very close points
+                                        const currentExtreme = Math.abs(currentData.x) + Math.abs(currentData.y);
+                                        const otherExtreme = Math.abs(otherPoint.x) + Math.abs(otherPoint.y);
+                                        
+                                        // Show the point that's most extreme or if tied, show both
+                                        if (currentExtreme < otherExtreme) {
+                                            showLabel = false;
+                                        }
+                                    }
+                                });
+                                
+                                return showLabel;
+                            }
+                        },
+                        legend: { 
+                            position: 'bottom', 
+                            labels: { 
+                                font: { 
+                                    size: 12 
+                                } 
+                            } 
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    const valuePrefix = metric.valuePrefix || '';
+                                    return [
+                                        `${point.label}`,
+                                        `Value: ${valuePrefix}${point.medianValue.toLocaleString()}`,
+                                        `MoM Change: ${point.x.toFixed(1)}%`,
+                                        `YoY Change: ${point.y.toFixed(1)}%`
+                                    ];
+                                }
+                            }
+                        },
+                        title: { 
+                            display: true, 
+                            text: metric.title, 
+                            font: { 
+                                size: 20, 
+                                weight: 'bold' 
+                            } 
+                        },
+                        annotation: {
+                            drawTime: 'beforeDatasetsDraw',
+                            annotations: {
+                                negativeQuadrant: {
+                                    type: 'box',
+                                    xMin: metric.scales.x.min,
+                                    xMax: 0,
+                                    yMin: metric.scales.y.min,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 0, 0, 0.1)'
+                                },
+                                positiveQuadrant: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: metric.scales.x.max,
+                                    yMin: 0,
+                                    yMax: metric.scales.y.max,
+                                    backgroundColor: 'rgba(0, 255, 0, 0.1)'
+                                },
+                                mixedQuadrant1: {
+                                    type: 'box',
+                                    xMin: metric.scales.x.min,
+                                    xMax: 0,
+                                    yMin: 0,
+                                    yMax: metric.scales.y.max,
+                                    backgroundColor: 'rgba(255, 255, 0, 0.1)'
+                                },
+                                mixedQuadrant2: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: metric.scales.x.max,
+                                    yMin: metric.scales.y.min,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 255, 0, 0.1)'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            title: { 
+                                display: true, 
+                                text: 'Month-over-Month Change (%)', 
+                                font: { 
+                                    size: 14 
+                                } 
+                            },
+                            ...metric.scales.x 
+                        },
+                        y: { 
+                            title: { 
+                                display: true, 
+                                text: 'Year-over-Year Change (%)', 
+                                font: { 
+                                    size: 14 
+                                } 
+                            },
+                            ...metric.scales.y 
+                        }
+                    }
+                }
+            });
+        }
+
+        Object.keys(metrics).forEach(metricKey => {
+            const chartId = `${metricKey}Chart`;
+            loadData(metricKey, chartId);
+        });
+    </script>
+</body>
+</html>

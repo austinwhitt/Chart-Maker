@@ -1,0 +1,110 @@
+[
+    {
+        "x": -1.89873417721519,
+        "y": 3.3333333333333335,
+        "label": "Nashville, TN - Med Sale $ / SqFt",
+        "medianValue": 310.0
+    },
+    {
+        "x": -0.8298755186721992,
+        "y": 0.0,
+        "label": "Mount Juliet, TN - Med Sale $ / SqFt",
+        "medianValue": 239.0
+    },
+    {
+        "x": 2.512562814070352,
+        "y": -0.4878048780487805,
+        "label": "Lebanon, TN - Med Sale $ / SqFt",
+        "medianValue": 204.0
+    },
+    {
+        "x": -4.225352112676056,
+        "y": 0.49261083743842365,
+        "label": "Gallatin, TN - Med Sale $ / SqFt",
+        "medianValue": 204.0
+    },
+    {
+        "x": 0.0,
+        "y": -0.8888888888888888,
+        "label": "Hendersonville, TN - Med Sale $ / SqFt",
+        "medianValue": 223.0
+    },
+    {
+        "x": -1.1940298507462688,
+        "y": 4.746835443037975,
+        "label": "Franklin, TN - Med Sale $ / SqFt",
+        "medianValue": 331.0
+    },
+    {
+        "x": -1.6129032258064515,
+        "y": -2.13903743315508,
+        "label": "Clarksville, TN - Med Sale $ / SqFt",
+        "medianValue": 183.0
+    },
+    {
+        "x": -2.083333333333333,
+        "y": -0.8438818565400843,
+        "label": "SUMMARY - Med Sale $ / SqFt",
+        "medianValue": 235.0
+    },
+    {
+        "x": -2.13903743315508,
+        "y": -2.13903743315508,
+        "label": "Montgomery County, TN - Med Sale $ / SqFt",
+        "medianValue": 183.0
+    },
+    {
+        "x": -1.4018691588785046,
+        "y": 1.4423076923076923,
+        "label": "Cheatham County, TN - Med Sale $ / SqFt",
+        "medianValue": 211.0
+    },
+    {
+        "x": 5.092592592592593,
+        "y": 10.194174757281553,
+        "label": "Robertson County, TN - Med Sale $ / SqFt",
+        "medianValue": 227.0
+    },
+    {
+        "x": -3.6764705882352944,
+        "y": -0.7575757575757576,
+        "label": "Davidson County, TN - Med Sale $ / SqFt",
+        "medianValue": 262.0
+    },
+    {
+        "x": 0.47393364928909953,
+        "y": -3.1963470319634704,
+        "label": "Wilson County, TN - Med Sale $ / SqFt",
+        "medianValue": 212.0
+    },
+    {
+        "x": -2.8938906752411575,
+        "y": 4.498269896193772,
+        "label": "Williamson County, TN - Med Sale $ / SqFt",
+        "medianValue": 302.0
+    },
+    {
+        "x": 7.174887892376682,
+        "y": 16.585365853658537,
+        "label": "Trousdale County, TN - Med Sale $ / SqFt",
+        "medianValue": 239.0
+    },
+    {
+        "x": -0.4524886877828055,
+        "y": 4.761904761904762,
+        "label": "Rutherford County, TN - Med Sale $ / SqFt",
+        "medianValue": 220.0
+    },
+    {
+        "x": -2.7649769585253456,
+        "y": -1.4018691588785046,
+        "label": "Sumner County, TN - Med Sale $ / SqFt",
+        "medianValue": 211.0
+    },
+    {
+        "x": -0.4291845493562232,
+        "y": 1.7543859649122806,
+        "label": "SUMMARY - Med Sale $ / SqFt",
+        "medianValue": 232.0
+    }
+]

@@ -1,0 +1,110 @@
+[
+    {
+        "x": -12.15106732348112,
+        "y": 13.347457627118642,
+        "label": "Nashville, TN - Months of Supply",
+        "medianValue": 5.35
+    },
+    {
+        "x": -13.186813186813179,
+        "y": 31.66666666666667,
+        "label": "Mount Juliet, TN - Months of Supply",
+        "medianValue": 3.95
+    },
+    {
+        "x": 0.7978723404255386,
+        "y": 4.407713498622594,
+        "label": "Lebanon, TN - Months of Supply",
+        "medianValue": 3.79
+    },
+    {
+        "x": -10.443864229765012,
+        "y": 9.935897435897436,
+        "label": "Gallatin, TN - Months of Supply",
+        "medianValue": 3.43
+    },
+    {
+        "x": 48.46625766871166,
+        "y": 57.65472312703584,
+        "label": "Hendersonville, TN - Months of Supply",
+        "medianValue": 4.84
+    },
+    {
+        "x": -12.23404255319149,
+        "y": 5.095541401273875,
+        "label": "Franklin, TN - Months of Supply",
+        "medianValue": 3.3
+    },
+    {
+        "x": -16.752136752136746,
+        "y": 15.95238095238095,
+        "label": "Clarksville, TN - Months of Supply",
+        "medianValue": 4.87
+    },
+    {
+        "x": -9.108910891089108,
+        "y": 14.463840399002494,
+        "label": "SUMMARY - Months of Supply",
+        "medianValue": 4.59
+    },
+    {
+        "x": -16.46655231560892,
+        "y": 12.211981566820283,
+        "label": "Montgomery County, TN - Months of Supply",
+        "medianValue": 4.87
+    },
+    {
+        "x": -14.746543778801843,
+        "y": 40.15151515151515,
+        "label": "Cheatham County, TN - Months of Supply",
+        "medianValue": 5.55
+    },
+    {
+        "x": 8.059701492537313,
+        "y": -4.232804232804225,
+        "label": "Robertson County, TN - Months of Supply",
+        "medianValue": 3.62
+    },
+    {
+        "x": -9.653916211293264,
+        "y": 17.81472684085511,
+        "label": "Davidson County, TN - Months of Supply",
+        "medianValue": 4.96
+    },
+    {
+        "x": -8.39506172839506,
+        "y": 10.089020771513349,
+        "label": "Wilson County, TN - Months of Supply",
+        "medianValue": 3.71
+    },
+    {
+        "x": -21.481481481481474,
+        "y": -12.154696132596683,
+        "label": "Williamson County, TN - Months of Supply",
+        "medianValue": 3.18
+    },
+    {
+        "x": 16.608391608391614,
+        "y": 141.66666666666669,
+        "label": "Trousdale County, TN - Months of Supply",
+        "medianValue": 6.67
+    },
+    {
+        "x": -4.807692307692305,
+        "y": 12.92775665399241,
+        "label": "Rutherford County, TN - Months of Supply",
+        "medianValue": 2.97
+    },
+    {
+        "x": 7.142857142857144,
+        "y": 17.73255813953488,
+        "label": "Sumner County, TN - Months of Supply",
+        "medianValue": 4.05
+    },
+    {
+        "x": -9.111111111111114,
+        "y": 11.141304347826079,
+        "label": "SUMMARY - Months of Supply",
+        "medianValue": 4.09
+    }
+]

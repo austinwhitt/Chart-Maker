@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Performance Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <div style="width: 90%; margin: auto; padding: 20px;">
+        <canvas id="scatterChart"></canvas>
+    </div>
+
+    <script>
+        Chart.register(ChartAnnotation);  // Register the annotation plugin
+
+        async function loadData() {
+            try {
+                const response = await fetch('./Data/scatter_data.json');
+                const data = await response.json();
+                
+                // Remove outliers and summaries and clean up labels
+                const filteredData = data.filter(point => 
+                    Math.abs(point.x) <= 15 && 
+                    Math.abs(point.y) <= 25 && 
+                    !point.label.toLowerCase().includes('summary')
+                ).map(point => ({
+                    ...point,
+                    label: point.label.replace(' - Med Sale $ (Closed)', '')
+                }));
+                
+                const cities = filteredData.filter(item => !item.label.toLowerCase().includes('county'));
+                const counties = filteredData.filter(item => item.label.toLowerCase().includes('county'));
+                
+                createChart(cities, counties);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function createChart(cities, counties) {
+            const ctx = document.getElementById('scatterChart');
+            
+            const cityDatasets = cities.map(city => ({
+                label: city.label,
+                data: [{
+                    x: city.x, 
+                    y: city.y,
+                    medianValue: city.medianValue
+                }],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 7,
+                pointHoverRadius: 9
+            }));
+
+            const countyDatasets = counties.map(county => ({
+                label: county.label,
+                data: [{
+                    x: county.x, 
+                    y: county.y,
+                    medianValue: county.medianValue
+                }],
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                pointRadius: 7,
+                pointHoverRadius: 9
+            }));
+
+            new Chart(ctx, {
+                type: 'scatter',
+                plugins: [ChartAnnotation],
+                data: {
+                    datasets: [...cityDatasets, ...countyDatasets]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                redBox: {
+                                    type: 'box',
+                                    xMin: -15,
+                                    xMax: 0,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                },
+                                yellowBox1: {
+                                    type: 'box',
+                                    xMin: -15,
+                                    xMax: 0,
+                                    yMin: 0,
+                                    yMax: 25,
+                                    backgroundColor: 'rgba(255, 255, 0, 0.1)',
+                                },
+                                yellowBox2: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: 15,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 255, 0, 0.1)',
+                                },
+                                greenBox: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: 15,
+                                    yMin: 0,
+                                    yMax: 25,
+                                    backgroundColor: 'rgba(0, 255, 0, 0.1)',
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(point.medianValue);
+                                    return [
+                                        `${context.dataset.label}`,
+                                        `Median Price: ${formattedValue}`,
+                                        `MoM Change: ${point.x.toFixed(1)}%`,
+                                        `YoY Change: ${point.y.toFixed(1)}%`
+                                    ];
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Middle Tennessee Real Estate Market Performance',
+                            font: { size: 16 }
+                        },
+                        subtitle: {
+                            display: true,
+                            text: 'Month-over-Month vs Year-over-Year Price Changes'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month over Month Change (%)'
+                            },
+                            min: -15,
+                            max: 15
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Year over Year Change (%)'
+                            },
+                            min: -20,
+                            max: 25
+                        }
+                    }
+                }
+            });
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

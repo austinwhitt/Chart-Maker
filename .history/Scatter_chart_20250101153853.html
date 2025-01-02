@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Middle Tennessee Real Estate Market Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        body {
+            background-color: rgba(247, 247, 247, 0.7);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1800px;
+            margin: auto;
+        }
+        .chart-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            height: 500px;
+        }
+        .page-title {
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-title">Middle Tennessee Real Estate Market Analysis</div>
+    <div class="charts-grid">
+        <div class="chart-container">
+            <canvas id="medianChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="inventoryChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="price_per_footChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="months_supplyChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="new_listingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="showingsChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const metrics = {
+            median: {
+                title: 'Median Sale Price',
+                subtitle: 'Month-over-Month vs Year-over-Year Changes',
+                valuePrefix: '$'
+            },
+            inventory: {
+                title: 'Active Inventory',
+                subtitle: 'Month-over-Month vs Year-over-Year Changes',
+                valuePrefix: ''
+            },
+            price_per_foot: {
+                title: 'Price Per Square Foot',
+                subtitle: 'Month-over-Month vs Year-over-Year Changes',
+                valuePrefix: '$'
+            },
+            months_supply: {
+                title: 'Months of Supply',
+                subtitle: 'Month-over-Month vs Year-over-Year Changes',
+                valuePrefix: ''
+            },
+            new_listings: {
+                title: 'New Listings',
+                subtitle: 'Month-over-Month vs Year-over-Year Changes',
+                valuePrefix: ''
+            },
+            showings: {
+                title: 'Showings',
+                subtitle: 'Month-over-Month vs Year-over-Year Changes',
+                valuePrefix: ''
+            }
+        };
+
+        async function loadData(metric) {
+            try {
+                const response = await fetch(`./json/2024/December/${metric}_scatter.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                const filteredData = data.filter(point => 
+                    Math.abs(point.x) <= 15 && 
+                    Math.abs(point.y) <= 25 && 
+                    !point.label.toLowerCase().includes('summary')
+                );
+                
+                const cities = filteredData.filter(item => !item.label.toLowerCase().includes('county'));
+                const counties = filteredData.filter(item => item.label.toLowerCase().includes('county'));
+                
+                createChart(metric, cities, counties);
+            } catch (error) {
+                console.error(`Error loading ${metric} data:`, error);
+                const canvas = document.getElementById(`${metric}Chart`);
+                const ctx = canvas.getContext('2d');
+                ctx.font = '14px Arial';
+                ctx.fillStyle = 'red';
+                ctx.textAlign = 'center';
+                ctx.fillText(`Error loading ${metric} data`, canvas.width/2, canvas.height/2);
+            }
+        }
+
+        function createChart(metric, cities, counties) {
+            const ctx = document.getElementById(`${metric}Chart`).getContext('2d');
+            const metricConfig = metrics[metric];
+            
+            const cityDatasets = cities.map(city => ({
+                label: city.label,
+                data: [{x: city.x, y: city.y, medianValue: city.medianValue}],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }));
+
+            const countyDatasets = counties.map(county => ({
+                label: county.label,
+                data: [{x: county.x, y: county.y, medianValue: county.medianValue}],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }));
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [...cityDatasets, ...countyDatasets]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 10,
+                                padding: 10,
+                                font: { size: 11 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    const formattedValue = metricConfig.valuePrefix + 
+                                        new Intl.NumberFormat('en-US').format(point.medianValue);
+                                    return [
+                                        `${context.dataset.label}`,
+                                        `Value: ${formattedValue}`,
+                                        `MoM Change: ${point.x.toFixed(1)}%`,
+                                        `YoY Change: ${point.y.toFixed(1)}%`
+                                    ];
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: metricConfig.title,
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            padding: 20
+                        },
+                        subtitle: {
+                            display: true,
+                            text: metricConfig.subtitle,
+                            padding: 10
+                        },
+                        annotation: {
+                            drawTime: 'beforeDatasetsDraw',
+                            annotations: {
+                                negativeQuadrant: {
+                                    type: 'box',
+                                    xMin: -15,
+                                    xMax: 0,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                    borderWidth: 0
+                                },
+                                mixedQuadrant1: {
+                                    type: 'box',
+                                    xMin: -15,
+                                    xMax: 0,
+                                    yMin: 0,
+                                    yMax: 25,
+                                    backgroundColor: 'rgba(255, 255, 0, 0.1)',
+                                    borderWidth: 0
+                                },
+                                mixedQuadrant2: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: 15,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 255, 0, 0.1)',
+                                    borderWidth: 0
+                                },
+                                positiveQuadrant: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: 15,
+                                    yMin: 0,
+                                    yMax: 25,
+                                    backgroundColor: 'rgba(0, 255, 0, 0.1)',
+                                    borderWidth: 0
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month over Month Change (%)'
+                            },
+                            min: -15,
+                            max: 15
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Year over Year Change (%)'
+                            },
+                            min: -20,
+                            max: 25
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load all charts
+        Object.keys(metrics).forEach(metric => {
+            loadData(metric);
+        });
+    </script>
+</body>
+</html>

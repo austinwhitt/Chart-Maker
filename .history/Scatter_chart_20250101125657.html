@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Change Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            display: flex;
+            width: 95%;
+            margin: auto;
+        }
+        .chart-container {
+            width: 75%;
+        }
+        .legend-container {
+            width: 25%;
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-left: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-section {
+            margin-bottom: 20px;
+        }
+        .legend-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .toggle-all {
+            margin-bottom: 15px;
+            padding: 5px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chart-container">
+            <canvas id="scatterChart"></canvas>
+        </div>
+        <div class="legend-container">
+            <div class="legend-section">
+                <div class="toggle-all">
+                    <label>
+                        <input type="checkbox" id="toggleAll" checked> Toggle All
+                    </label>
+                </div>
+                <div class="legend-title">Cities</div>
+                <div id="cityLegend"></div>
+            </div>
+            <div class="legend-section">
+                <div class="legend-title">Counties</div>
+                <div id="countyLegend"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let allLocations = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch('./Data/scatter_data.json');
+                const data = await response.json();
+                
+                // Separate cities and counties
+                const cities = data.filter(item => !item.label.toLowerCase().includes('county'));
+                const counties = data.filter(item => item.label.toLowerCase().includes('county'));
+                
+                createChart(cities, counties);
+                createCustomLegend(cities, counties);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function createChart(cities, counties) {
+            const ctx = document.getElementById('scatterChart').getContext('2d');
+            
+            chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Cities',
+                            data: cities,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        },
+                        {
+                            label: 'Counties',
+                            data: counties,
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false // Hide default legend
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    return `${point.label}: MoM ${point.x.toFixed(1)}%, YoY ${point.y.toFixed(1)}%`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Price Changes by Location (MoM vs YoY)',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month over Month Change (%)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Year over Year Change (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createCustomLegend(cities, counties) {
+            const cityLegend = document.getElementById('cityLegend');
+            const countyLegend = document.getElementById('countyLegend');
+            
+            // Create legend items for cities
+            cities.forEach(city => {
+                createLegendItem(city, cityLegend, 0);
+            });
+            
+            // Create legend items for counties
+            counties.forEach(county => {
+                createLegendItem(county, countyLegend, 1);
+            });
+
+            // Toggle All functionality
+            document.getElementById('toggleAll').addEventListener('change', function(e) {
+                const checkboxes = document.querySelectorAll('.legend-item input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = e.target.checked;
+                    updateDataVisibility(checkbox);
+                });
+            });
+        }
+
+        function createLegendItem(location, container, datasetIndex) {
+            const item = document.createElement('div');
+            item.className = 'legend-item';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = true;
+            checkbox.dataset.location = location.label;
+            checkbox.dataset.datasetIndex = datasetIndex;
+            
+            const label = document.createElement('label');
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(` ${location.label}`));
+            
+            item.appendChild(label);
+            container.appendChild(item);
+            
+            checkbox.addEventListener('change', function() {
+                updateDataVisibility(this);
+            });
+        }
+
+        function updateDataVisibility(checkbox) {
+            const datasetIndex = parseInt(checkbox.dataset.datasetIndex);
+            const locationLabel = checkbox.dataset.location;
+            
+            const dataset = chart.data.datasets[datasetIndex];
+            const dataIndex = dataset.data.findIndex(item => item.label === locationLabel);
+            
+            if (!dataset._originalData) {
+                dataset._originalData = [...dataset.data];
+            }
+
+            if (checkbox.checked) {
+                // Show the point
+                const originalPoint = dataset._originalData.find(item => item.label === locationLabel);
+                if (originalPoint) {
+                    dataset.data[dataIndex] = originalPoint;
+                }
+            } else {
+                // Hide the point
+                dataset.data[dataIndex] = null;
+            }
+            
+            chart.update();
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+[
+    {
+        "x": -38.39907192575406,
+        "y": -26.75862068965517,
+        "label": "Nashville, TN - New Listings",
+        "medianValue": 531.0
+    },
+    {
+        "x": -23.56020942408377,
+        "y": -6.41025641025641,
+        "label": "Mount Juliet, TN - New Listings",
+        "medianValue": 146.0
+    },
+    {
+        "x": -20.8955223880597,
+        "y": 6.532663316582915,
+        "label": "Lebanon, TN - New Listings",
+        "medianValue": 212.0
+    },
+    {
+        "x": -21.26865671641791,
+        "y": 11.052631578947368,
+        "label": "Gallatin, TN - New Listings",
+        "medianValue": 211.0
+    },
+    {
+        "x": -31.292517006802722,
+        "y": 2.0202020202020203,
+        "label": "Hendersonville, TN - New Listings",
+        "medianValue": 101.0
+    },
+    {
+        "x": -38.34196891191709,
+        "y": -23.717948717948715,
+        "label": "Franklin, TN - New Listings",
+        "medianValue": 119.0
+    },
+    {
+        "x": -19.183673469387756,
+        "y": 3.125,
+        "label": "Clarksville, TN - New Listings",
+        "medianValue": 396.0
+    },
+    {
+        "x": -29.061595700702767,
+        "y": -10.110005238344682,
+        "label": "SUMMARY - New Listings",
+        "medianValue": 1716.0
+    },
+    {
+        "x": -18.568665377176018,
+        "y": 5.513784461152882,
+        "label": "Montgomery County, TN - New Listings",
+        "medianValue": 421.0
+    },
+    {
+        "x": -24.444444444444443,
+        "y": 44.680851063829785,
+        "label": "Cheatham County, TN - New Listings",
+        "medianValue": 68.0
+    },
+    {
+        "x": -24.06417112299465,
+        "y": 14.516129032258066,
+        "label": "Robertson County, TN - New Listings",
+        "medianValue": 142.0
+    },
+    {
+        "x": -36.321483771251934,
+        "y": -18.817733990147783,
+        "label": "Davidson County, TN - New Listings",
+        "medianValue": 824.0
+    },
+    {
+        "x": -22.851153039832283,
+        "y": 4.2492917847025495,
+        "label": "Wilson County, TN - New Listings",
+        "medianValue": 368.0
+    },
+    {
+        "x": -30.798479087452474,
+        "y": -19.290465631929045,
+        "label": "Williamson County, TN - New Listings",
+        "medianValue": 364.0
+    },
+    {
+        "x": -28.57142857142857,
+        "y": 15.384615384615385,
+        "label": "Trousdale County, TN - New Listings",
+        "medianValue": 15.0
+    },
+    {
+        "x": -25.0,
+        "y": -5.471698113207547,
+        "label": "Rutherford County, TN - New Listings",
+        "medianValue": 501.0
+    },
+    {
+        "x": -17.38317757009346,
+        "y": 0.683371298405467,
+        "label": "Sumner County, TN - New Listings",
+        "medianValue": 442.0
+    },
+    {
+        "x": -27.11471610660487,
+        "y": -6.704242064669237,
+        "label": "SUMMARY - New Listings",
+        "medianValue": 3145.0
+    }
+]

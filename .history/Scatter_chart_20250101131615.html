@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Performance Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        body {
+            background-color: rgba(247, 247, 247, 0.9);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+        .chart-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container" style="width: 90%; margin: auto;">
+        <canvas id="scatterChart"></canvas>
+    </div>
+
+    <script>
+        // ... (previous loadData function remains the same) ...
+
+        function createChart(cities, counties) {
+            const ctx = document.getElementById('scatterChart').getContext('2d');
+            
+            // ... (previous dataset definitions remain the same) ...
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [...cityDatasets, ...countyDatasets]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 8,
+                                padding: 15,
+                                font: {
+                                    size: 11,
+                                    family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif"
+                                },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            // ... (previous tooltip config remains the same) ...
+                        },
+                        title: {
+                            // ... (previous title config remains the same) ...
+                        },
+                        subtitle: {
+                            // ... (previous subtitle config remains the same) ...
+                        },
+                        annotation: {
+                            drawTime: 'beforeDatasetsDraw',
+                            annotations: {
+                                // Red quadrant (negative both)
+                                negativeQuadrant: {
+                                    type: 'box',
+                                    xMin: -15,
+                                    xMax: 0,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                                    borderWidth: 0
+                                },
+                                // Yellow quadrants (mixed)
+                                mixedQuadrant1: {
+                                    type: 'box',
+                                    xMin: -15,
+                                    xMax: 0,
+                                    yMin: 0,
+                                    yMax: 25,
+                                    backgroundColor: 'rgba(255, 205, 86, 0.1)',
+                                    borderWidth: 0
+                                },
+                                mixedQuadrant2: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: 15,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    backgroundColor: 'rgba(255, 205, 86, 0.1)',
+                                    borderWidth: 0
+                                },
+                                // Green quadrant (positive both)
+                                positiveQuadrant: {
+                                    type: 'box',
+                                    xMin: 0,
+                                    xMax: 15,
+                                    yMin: 0,
+                                    yMax: 25,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                                    borderWidth: 0
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month over Month Change (%)',
+                                font: {
+                                    size: 12,
+                                    family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif"
+                                }
+                            },
+                            min: -15,
+                            max: 15,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Year over Year Change (%)',
+                                font: {
+                                    size: 12,
+                                    family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif"
+                                }
+                            },
+                            min: -20,
+                            max: 25,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

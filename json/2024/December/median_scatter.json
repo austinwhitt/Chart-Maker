@@ -1,0 +1,140 @@
+[
+    {
+        "x": -1.9967026928008793,
+        "y": 5.1080550098231825,
+        "label": "Nashville, TN - Med Sale $ (Closed)",
+        "medianValue": 535000.0
+    },
+    {
+        "x": -9.59204409988079,
+        "y": -8.870967741935484,
+        "label": "Mount Juliet, TN - Med Sale $ (Closed)",
+        "medianValue": 565000.0
+    },
+    {
+        "x": -1.5737500000000002,
+        "y": -7.351539611008484,
+        "label": "Lebanon, TN - Med Sale $ (Closed)",
+        "medianValue": 393705.0
+    },
+    {
+        "x": 1.6473250487649855,
+        "y": -5.1828473588714825,
+        "label": "Gallatin, TN - Med Sale $ (Closed)",
+        "medianValue": 371029.0
+    },
+    {
+        "x": -6.700983546281828,
+        "y": 10.326086956521738,
+        "label": "Hendersonville, TN - Med Sale $ (Closed)",
+        "medianValue": 507500.0
+    },
+    {
+        "x": -6.303784344219802,
+        "y": 3.873563218390805,
+        "label": "Franklin, TN - Med Sale $ (Closed)",
+        "medianValue": 903700.0
+    },
+    {
+        "x": -4.586026469682979,
+        "y": 0.032268473701193935,
+        "label": "Clarksville, TN - Med Sale $ (Closed)",
+        "medianValue": 310000.0
+    },
+    {
+        "x": -5.639913232104121,
+        "y": -3.3118470771282507,
+        "label": "SUMMARY - Med Sale $ (Closed)",
+        "medianValue": 435000.0
+    },
+    {
+        "x": 0.9174311926605505,
+        "y": 15.546218487394958,
+        "label": "Macon County, TN - Med Sale $ (Closed)",
+        "medianValue": 275000.0
+    },
+    {
+        "x": -0.384418901660281,
+        "y": 16.076849812488838,
+        "label": "Cheatham County, TN - Med Sale $ (Closed)",
+        "medianValue": 389995.0
+    },
+    {
+        "x": 8.13212857354466,
+        "y": 1.6741413409844283,
+        "label": "Robertson County, TN - Med Sale $ (Closed)",
+        "medianValue": 365000.0
+    },
+    {
+        "x": 2.385321100917431,
+        "y": -1.5873015873015872,
+        "label": "Smith County, TN - Med Sale $ (Closed)",
+        "medianValue": 279000.0
+    },
+    {
+        "x": -2.127659574468085,
+        "y": 2.2222222222222223,
+        "label": "Davidson County, TN - Med Sale $ (Closed)",
+        "medianValue": 460000.0
+    },
+    {
+        "x": 1.1494517115335985,
+        "y": -6.365184081719515,
+        "label": "Wilson County, TN - Med Sale $ (Closed)",
+        "medianValue": 439990.0
+    },
+    {
+        "x": 43.91752577319588,
+        "y": 5.757575757575758,
+        "label": "Cannon County, TN - Med Sale $ (Closed)",
+        "medianValue": 349000.0
+    },
+    {
+        "x": -3.387012987012987,
+        "y": 5.74062787122363,
+        "label": "Williamson County, TN - Med Sale $ (Closed)",
+        "medianValue": 929900.0
+    },
+    {
+        "x": -3.8724373576309796,
+        "y": 5.764411027568922,
+        "label": "Maury County, TN - Med Sale $ (Closed)",
+        "medianValue": 422000.0
+    },
+    {
+        "x": 55.59877743817727,
+        "y": 93.9729823346034,
+        "label": "Trousdale County, TN - Med Sale $ (Closed)",
+        "medianValue": 560000.0
+    },
+    {
+        "x": -2.262758628195779,
+        "y": 9.512195121951219,
+        "label": "Rutherford County, TN - Med Sale $ (Closed)",
+        "medianValue": 449000.0
+    },
+    {
+        "x": 7.959479015918958,
+        "y": 5.070422535211268,
+        "label": "Dickson County, TN - Med Sale $ (Closed)",
+        "medianValue": 373000.0
+    },
+    {
+        "x": 19.482071713147413,
+        "y": 10.684628160177155,
+        "label": "Hickman County, TN - Med Sale $ (Closed)",
+        "medianValue": 299900.0
+    },
+    {
+        "x": 1.8181818181818181,
+        "y": 5.793450881612091,
+        "label": "Sumner County, TN - Med Sale $ (Closed)",
+        "medianValue": 420000.0
+    },
+    {
+        "x": 0.65,
+        "y": 4.748868778280543,
+        "label": "SUMMARY - Med Sale $ (Closed)",
+        "medianValue": 462990.0
+    }
+]

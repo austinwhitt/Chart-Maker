@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Change Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 90%; margin: auto;">
+        <canvas id="scatterChart"></canvas>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('./Data/scatter_data.json');
+                const data = await response.json();
+                
+                // Separate cities and counties into individual datasets
+                const cities = data.filter(item => !item.label.toLowerCase().includes('county'));
+                const counties = data.filter(item => item.label.toLowerCase().includes('county'));
+                
+                createChart(cities, counties);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function createChart(cities, counties) {
+            const ctx = document.getElementById('scatterChart').getContext('2d');
+            
+            // Create individual datasets for each location
+            const cityDatasets = cities.map(city => ({
+                label: city.label,
+                data: [{x: city.x, y: city.y}],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }));
+
+            const countyDatasets = counties.map(county => ({
+                label: county.label,
+                data: [{x: county.x, y: county.y}],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }));
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [...cityDatasets, ...countyDatasets]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                boxWidth: 10,
+                                padding: 10,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    return `${context.dataset.label}: MoM ${point.x.toFixed(1)}%, YoY ${point.y.toFixed(1)}%`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Price Changes by Location (MoM vs YoY)',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month over Month Change (%)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Year over Year Change (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

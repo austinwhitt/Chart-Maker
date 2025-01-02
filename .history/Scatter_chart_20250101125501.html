@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Price Change Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="scatterChart"></canvas>
+    </div>
+
+    <script>
+        // Function to load and parse the JSON file
+        async function loadData() {
+            try {
+                const response = await fetch('./Data/scatter_data.json');
+                const data = await response.json();
+                createChart(data);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        // Function to create the scatter plot
+        function createChart(data) {
+            const ctx = document.getElementById('scatterChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Price Changes by Location',
+                        data: data.map(item => ({
+                            x: item.x,  // MoM Change
+                            y: item.y,  // YoY Change
+                            label: item.label  // Location name
+                        })),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    return `${point.label}: MoM ${point.x.toFixed(1)}%, YoY ${point.y.toFixed(1)}%`;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Price Changes by Location (MoM vs YoY)',
+                            font: {
+                                size: 16
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month over Month Change (%)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Year over Year Change (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load the data when the page loads
+        loadData();
+    </script>
+</body>
+</html>

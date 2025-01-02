@@ -1,0 +1,110 @@
+[
+    {
+        "x": 4.337349397590354,
+        "y": -10.813594232749749,
+        "label": "Nashville, TN - Avg Total Showings to Contract",
+        "medianValue": 8.66
+    },
+    {
+        "x": -17.456359102244384,
+        "y": -26.116071428571434,
+        "label": "Mount Juliet, TN - Avg Total Showings to Contract",
+        "medianValue": 6.62
+    },
+    {
+        "x": 29.745596868884526,
+        "y": 4.245283018867918,
+        "label": "Lebanon, TN - Avg Total Showings to Contract",
+        "medianValue": 6.63
+    },
+    {
+        "x": -31.509121061359874,
+        "y": -42.797783933518005,
+        "label": "Gallatin, TN - Avg Total Showings to Contract",
+        "medianValue": 4.13
+    },
+    {
+        "x": -28.75536480686695,
+        "y": 17.89772727272728,
+        "label": "Hendersonville, TN - Avg Total Showings to Contract",
+        "medianValue": 8.3
+    },
+    {
+        "x": -23.81322957198444,
+        "y": -37.12267180475274,
+        "label": "Franklin, TN - Avg Total Showings to Contract",
+        "medianValue": 9.79
+    },
+    {
+        "x": 2.5710419485791665,
+        "y": -9.003601440576231,
+        "label": "Clarksville, TN - Avg Total Showings to Contract",
+        "medianValue": 7.58
+    },
+    {
+        "x": -5.58252427184466,
+        "y": -16.433941997851775,
+        "label": "SUMMARY - Avg Total Showings to Contract",
+        "medianValue": 7.78
+    },
+    {
+        "x": 1.3531799729364078,
+        "y": 0.0,
+        "label": "Montgomery County, TN - Avg Total Showings to Contract",
+        "medianValue": 7.49
+    },
+    {
+        "x": 8.527131782945734,
+        "y": -8.735332464146023,
+        "label": "Cheatham County, TN - Avg Total Showings to Contract",
+        "medianValue": 7.0
+    },
+    {
+        "x": -19.2627824019025,
+        "y": -2.9999999999999996,
+        "label": "Robertson County, TN - Avg Total Showings to Contract",
+        "medianValue": 6.79
+    },
+    {
+        "x": 8.292682926829286,
+        "y": -6.918238993710675,
+        "label": "Davidson County, TN - Avg Total Showings to Contract",
+        "medianValue": 8.88
+    },
+    {
+        "x": 7.643312101910821,
+        "y": -8.276797829036639,
+        "label": "Wilson County, TN - Avg Total Showings to Contract",
+        "medianValue": 6.76
+    },
+    {
+        "x": -4.853387259858447,
+        "y": -22.868852459016388,
+        "label": "Williamson County, TN - Avg Total Showings to Contract",
+        "medianValue": 9.41
+    },
+    {
+        "x": 100.0,
+        "y": 0.0,
+        "label": "Trousdale County, TN - Avg Total Showings to Contract",
+        "medianValue": 6.0
+    },
+    {
+        "x": -7.547169811320749,
+        "y": -0.7788161993769442,
+        "label": "Rutherford County, TN - Avg Total Showings to Contract",
+        "medianValue": 6.37
+    },
+    {
+        "x": -30.410958904109584,
+        "y": -41.94285714285714,
+        "label": "Sumner County, TN - Avg Total Showings to Contract",
+        "medianValue": 5.08
+    },
+    {
+        "x": -3.1847133757961785,
+        "y": -13.242009132420094,
+        "label": "SUMMARY - Avg Total Showings to Contract",
+        "medianValue": 7.6
+    }
+]

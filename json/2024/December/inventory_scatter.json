@@ -1,0 +1,218 @@
+[
+    {
+        "x": -6.104540251812286,
+        "y": 20.578147966682998,
+        "label": "Nashville, TN - Active Inventory",
+        "medianValue": 2461.0
+    },
+    {
+        "x": -15.458937198067632,
+        "y": -4.632152588555858,
+        "label": "Nashville, TN - Under Contract Inventory",
+        "medianValue": 700.0
+    },
+    {
+        "x": 0.0,
+        "y": 35.53299492385787,
+        "label": "Mount Juliet, TN - Active Inventory",
+        "medianValue": 267.0
+    },
+    {
+        "x": -3.508771929824561,
+        "y": 50.68493150684932,
+        "label": "Mount Juliet, TN - Under Contract Inventory",
+        "medianValue": 220.0
+    },
+    {
+        "x": -5.934065934065933,
+        "y": 22.636103151862464,
+        "label": "Lebanon, TN - Active Inventory",
+        "medianValue": 428.0
+    },
+    {
+        "x": -10.801393728222997,
+        "y": 0.39215686274509803,
+        "label": "Lebanon, TN - Under Contract Inventory",
+        "medianValue": 256.0
+    },
+    {
+        "x": -5.3984575835475574,
+        "y": 9.523809523809524,
+        "label": "Gallatin, TN - Active Inventory",
+        "medianValue": 368.0
+    },
+    {
+        "x": -0.3968253968253968,
+        "y": 4.149377593360995,
+        "label": "Gallatin, TN - Under Contract Inventory",
+        "medianValue": 251.0
+    },
+    {
+        "x": -5.714285714285714,
+        "y": 36.08247422680412,
+        "label": "Hendersonville, TN - Active Inventory",
+        "medianValue": 264.0
+    },
+    {
+        "x": -24.561403508771928,
+        "y": 3.2,
+        "label": "Hendersonville, TN - Under Contract Inventory",
+        "medianValue": 129.0
+    },
+    {
+        "x": -10.69182389937107,
+        "y": 18.005540166204987,
+        "label": "Franklin, TN - Active Inventory",
+        "medianValue": 426.0
+    },
+    {
+        "x": -13.108614232209737,
+        "y": -19.72318339100346,
+        "label": "Franklin, TN - Under Contract Inventory",
+        "medianValue": 232.0
+    },
+    {
+        "x": -0.14749262536873156,
+        "y": 30.443159922928707,
+        "label": "Clarksville, TN - Active Inventory",
+        "medianValue": 1354.0
+    },
+    {
+        "x": -7.6923076923076925,
+        "y": 2.013422818791946,
+        "label": "Clarksville, TN - Under Contract Inventory",
+        "medianValue": 456.0
+    },
+    {
+        "x": -4.73990417522245,
+        "y": 23.272807794508417,
+        "label": "SUMMARY - Active Inventory",
+        "medianValue": 5567.0
+    },
+    {
+        "x": -11.238622872971904,
+        "y": 0.2682163611980331,
+        "label": "SUMMARY - Under Contract Inventory",
+        "medianValue": 2243.0
+    },
+    {
+        "x": 0.0,
+        "y": 30.601092896174865,
+        "label": "Montgomery County, TN - Active Inventory",
+        "medianValue": 1434.0
+    },
+    {
+        "x": -8.25515947467167,
+        "y": 2.73109243697479,
+        "label": "Montgomery County, TN - Under Contract Inventory",
+        "medianValue": 489.0
+    },
+    {
+        "x": -6.910569105691057,
+        "y": 46.794871794871796,
+        "label": "Cheatham County, TN - Active Inventory",
+        "medianValue": 229.0
+    },
+    {
+        "x": 1.1363636363636365,
+        "y": 39.0625,
+        "label": "Cheatham County, TN - Under Contract Inventory",
+        "medianValue": 89.0
+    },
+    {
+        "x": -8.484848484848486,
+        "y": 19.367588932806324,
+        "label": "Robertson County, TN - Active Inventory",
+        "medianValue": 302.0
+    },
+    {
+        "x": -7.0754716981132075,
+        "y": 25.477707006369428,
+        "label": "Robertson County, TN - Under Contract Inventory",
+        "medianValue": 197.0
+    },
+    {
+        "x": -5.887372013651877,
+        "y": 25.817490494296578,
+        "label": "Davidson County, TN - Active Inventory",
+        "medianValue": 3309.0
+    },
+    {
+        "x": -11.639344262295081,
+        "y": -1.282051282051282,
+        "label": "Davidson County, TN - Under Contract Inventory",
+        "medianValue": 1078.0
+    },
+    {
+        "x": -4.503311258278146,
+        "y": 25.82897033158813,
+        "label": "Wilson County, TN - Active Inventory",
+        "medianValue": 721.0
+    },
+    {
+        "x": -6.7669172932330826,
+        "y": 21.271393643031786,
+        "label": "Wilson County, TN - Under Contract Inventory",
+        "medianValue": 496.0
+    },
+    {
+        "x": -11.940298507462686,
+        "y": 0.9505703422053232,
+        "label": "Williamson County, TN - Active Inventory",
+        "medianValue": 1062.0
+    },
+    {
+        "x": -10.199004975124378,
+        "y": -0.5509641873278237,
+        "label": "Williamson County, TN - Under Contract Inventory",
+        "medianValue": 722.0
+    },
+    {
+        "x": -2.0,
+        "y": 25.64102564102564,
+        "label": "Trousdale County, TN - Active Inventory",
+        "medianValue": 49.0
+    },
+    {
+        "x": -13.333333333333334,
+        "y": -31.57894736842105,
+        "label": "Trousdale County, TN - Under Contract Inventory",
+        "medianValue": 13.0
+    },
+    {
+        "x": -7.4074074074074066,
+        "y": 13.06532663316583,
+        "label": "Rutherford County, TN - Active Inventory",
+        "medianValue": 1125.0
+    },
+    {
+        "x": -13.237063778580024,
+        "y": -3.4805890227576977,
+        "label": "Rutherford County, TN - Under Contract Inventory",
+        "medianValue": 721.0
+    },
+    {
+        "x": -7.361963190184049,
+        "y": 13.25,
+        "label": "Sumner County, TN - Active Inventory",
+        "medianValue": 906.0
+    },
+    {
+        "x": -10.251798561151078,
+        "y": 0.8080808080808081,
+        "label": "Sumner County, TN - Under Contract Inventory",
+        "medianValue": 499.0
+    },
+    {
+        "x": -6.095179360674273,
+        "y": 20.27382833070037,
+        "label": "SUMMARY - Active Inventory",
+        "medianValue": 9136.0
+    },
+    {
+        "x": -10.167014613778706,
+        "y": 2.868754482428879,
+        "label": "SUMMARY - Under Contract Inventory",
+        "medianValue": 4303.0
+    }
+]
