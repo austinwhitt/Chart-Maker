@@ -74,23 +74,56 @@
     </div>
 
     <script>
-        window.onload = () => {
-    const isEmbedded = window !== window.parent; // Check if the page is in an iframe
-    const hash = window.location.hash.replace('#', ''); // Get the hash without the #
-
-    if (isEmbedded && hash) {
-        // Hide all charts and only show the one specified in the hash
+    
+    function handleEmbedding() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hash = window.location.hash.replace('#', '');
+    const isIframe = window !== window.parent;
+    
+    // Get chart ID either from URL params or hash
+    const targetChartId = urlParams.get('chart') || hash;
+    
+    if ((isIframe || urlParams.get('embed') === 'true') && targetChartId) {
+        // Add embed mode class to body
+        document.body.classList.add('embed-mode');
+        
+        // Hide all charts initially
         const allCharts = document.querySelectorAll('.chart-container');
-        allCharts.forEach(chart => (chart.style.display = 'none')); // Hide all
-
-        const targetChart = document.querySelector(`#${hash}Chart`).parentElement; // Find the target chart's container
-        if (targetChart) {
-            targetChart.style.display = 'block'; // Show only the targeted chart
+        allCharts.forEach(chart => {
+            chart.style.display = 'none';
+        });
+        
+        // Show only the targeted chart
+        let targetContainer;
+        if (targetChartId.includes('Chart')) {
+            targetContainer = document.getElementById(targetChartId).parentElement;
         } else {
-            console.warn(`No chart found for hash: #${hash}`);
+            targetContainer = document.getElementById(`${targetChartId}-container`);
         }
+        
+        if (targetContainer) {
+            targetContainer.style.display = 'block';
+            // Only load the targeted chart
+            const chartId = targetChartId.replace('-container', '');
+            const metricKey = chartId.replace('Chart', '');
+            if (metrics[metricKey]) {
+                loadData(metricKey, chartId);
+            }
+        }
+    } else {
+        // Load all charts in full mode
+        Object.keys(metrics).forEach(metricKey => {
+            const chartId = `${metricKey}Chart`;
+            loadData(metricKey, chartId);
+        });
     }
-};
+}
+
+// Call the handler when the page loads
+window.addEventListener('load', handleEmbedding);
+
+// Handle hash changes
+window.addEventListener('hashchange', handleEmbedding);
 
         Chart.register(ChartDataLabels);
 
