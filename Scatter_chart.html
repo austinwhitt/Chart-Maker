@@ -384,6 +384,17 @@
             const chartId = `${metricKey}Chart`;
             loadData(metricKey, chartId);
         });
+
+    window.onload = () => {
+    const hash = window.location.hash; // Get the anchor (e.g., #medianChart)
+    if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+};
+
     </script>
 </body>
 </html>
