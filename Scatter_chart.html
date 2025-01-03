@@ -125,6 +125,27 @@ window.addEventListener('load', handleEmbedding);
 // Handle hash changes
 window.addEventListener('hashchange', handleEmbedding);
 
+// Add this immediately after your metrics object definition
+window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    const isDirectLink = !!hash;
+    
+    if (isDirectLink) {
+        // Hide all charts
+        const allCharts = document.querySelectorAll('.chart-container');
+        allCharts.forEach(chart => chart.style.display = 'none');
+        
+        // Show only the targeted chart
+        const targetContainer = document.getElementById(hash).parentElement;
+        if (targetContainer) {
+            targetContainer.style.display = 'block';
+            // Hide the title and other elements for direct links
+            document.querySelector('.page-title').style.display = 'none';
+            document.querySelector('.legend-description').style.display = 'none';
+        }
+    }
+});
+
         Chart.register(ChartDataLabels);
 
         const metrics = {
