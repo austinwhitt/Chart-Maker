@@ -5,6 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.2.1/chartjs-plugin-annotation.min.js"></script>
+    
     <style>
         body {
             background: linear-gradient(135deg, rgba(247, 247, 247, 1), rgba(240, 240, 255, 1));
@@ -73,6 +74,24 @@
     </div>
 
     <script>
+        window.onload = () => {
+    const isEmbedded = window !== window.parent; // Check if the page is in an iframe
+    const hash = window.location.hash.replace('#', ''); // Get the hash without the #
+
+    if (isEmbedded && hash) {
+        // Hide all charts and only show the one specified in the hash
+        const allCharts = document.querySelectorAll('.chart-container');
+        allCharts.forEach(chart => (chart.style.display = 'none')); // Hide all
+
+        const targetChart = document.querySelector(`#${hash}Chart`).parentElement; // Find the target chart's container
+        if (targetChart) {
+            targetChart.style.display = 'block'; // Show only the targeted chart
+        } else {
+            console.warn(`No chart found for hash: #${hash}`);
+        }
+    }
+};
+
         Chart.register(ChartDataLabels);
 
         const metrics = {
@@ -384,17 +403,6 @@
             const chartId = `${metricKey}Chart`;
             loadData(metricKey, chartId);
         });
-
-    window.onload = () => {
-    const hash = window.location.hash; // Get the anchor (e.g., #medianChart)
-    if (hash) {
-        const target = document.querySelector(hash);
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-};
-
     </script>
 </body>
 </html>
